@@ -1,0 +1,67 @@
+:root {
+  /* الألوان الأساسية */
+  --primary-dark: #1E3A8A;   /* أزرق داكن للثقة والاستقرار */
+  --primary-main: #2563EB;   /* أزرق رئيسي للهوية البصرية */
+  --primary-light: #60A5FA;  /* أزرق فاتح للحيوية والنشاط */
+
+  /* ألوان الخلفيات */
+  --bg-dark: #0F172A;        /* خلفية داكنة للأقسام الرئيسية */
+  --bg-light: #F0F9FF;       /* خلفية فاتحة للأقسام الثانوية */
+  --bg-white: #FFFFFF;       /* خلفية بيضاء للتباين */
+
+  /* ألوان النصوص */
+  --text-dark: #1E293B;      /* نص داكن للقراءة السهلة */
+  --text-light: #94A3B8;     /* نص فاتح للمعلومات الثانوية */
+  --text-white: #FFFFFF;     /* نص أبيض للتباين العالي */
+
+  /* ألوان الأزرار والعناصر التفاعلية */
+  --accent: #22C55E;         /* لون مميز للدعوات للإجراء (CTA) */
+  --accent-hover: #16A34A;   /* لون التحويم للأزرار المميزة */
+
+  /* ألوان إضافية */
+  --warning: #FBBF24;        /* لون تحذيري للتنبيهات */
+  --error: #EF4444;          /* لون الخطأ للرسائل الهامة */
+}
+
+/* أمثلة على استخدام الألوان */
+body {
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+}
+
+.header {
+  background-color: var(--primary-dark);
+  color: var(--text-white);
+}
+
+.button-primary {
+  background-color: var(--primary-main);
+  color: var(--text-white);
+}
+
+.button-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.button-cta {
+  background-color: var(--accent);
+  color: var(--text-white);
+}
+
+.button-cta:hover {
+  background-color: var(--accent-hover);
+}
+
+.section-dark {
+  background-color: var(--bg-dark);
+  color: var(--text-white);
+}
+
+.section-light {
+  background-color: var(--bg-white);
+  color: var(--text-dark);
+}
+
+.info-text {
+  color: var(--text-light);
+}
