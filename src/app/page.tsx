@@ -1,11 +1,13 @@
-import Header from '@/components/Header/Header'
-import React from 'react'
+
+import PricingPlans from '@/components/Home/PricingPlans';
+import React from 'react';
 
 const HomePage = () => {
   return (
-<></>
+    <>
+      <PricingPlans />
+    </>
+  );
+};
 
-  )
-}
-
-export default HomePage
+export default HomePage;
