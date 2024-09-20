@@ -1,9 +1,9 @@
-'use client'
+'use client';
 import { useState } from 'react';
 import { Switch } from '@/components/ui/switch';
 import { PricingPlan } from '@/utils/types';
 import { CiCircleCheck } from 'react-icons/ci';
-
+import Link from 'next/link';
 const pricingPlans: PricingPlan[] = [
   {
     name: 'Basic',
@@ -82,12 +82,12 @@ export default function PricingPlans() {
                     {isYearly ? '/year' : '/month'}
                   </span>
                 </p>
-                <a
+                <Link
                   href="#"
                   className="mt-8 block w-full rounded-md border border-transparent bg-blue-600 py-2 text-center text-sm font-semibold text-white hover:bg-blue-700"
                 >
                   Get Started
-                </a>
+                </Link>
               </div>
               <div className="px-6 pb-8 pt-6">
                 <h4 className="text-sm font-medium uppercase tracking-wide text-gray-300">

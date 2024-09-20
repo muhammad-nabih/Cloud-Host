@@ -2,8 +2,8 @@ import { Article } from '@/utils/types';
 import Link from 'next/link';
 
 const ArticlesItem = ({ article }: { article: Article }) => (
-  <article className="flex flex-col justify-between space-y-2 rounded-lg bg-white p-4 shadow-2xl md:p-6 lg:p-8 dark:bg-slate-800">
-    <h3 className="line-clamp-1 border-b-2 border-blue-400 bg-inherit px-2 text-center text-xl font-bold text-neutral-50">
+  <article className="flex flex-col justify-between space-y-2 rounded-lg bg-white p-4 shadow-2xl dark:bg-slate-800 md:p-6 lg:p-8">
+    <h3 className="text-neutral-750 line-clamp-1 border-b-2 border-blue-400 bg-inherit px-2 text-center text-xl font-bold">
       {article.title}
     </h3>
     <p className="mt-4 line-clamp-2 overflow-hidden text-lg leading-relaxed text-zinc-700 dark:text-zinc-300">
