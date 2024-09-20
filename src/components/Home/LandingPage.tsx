@@ -4,7 +4,7 @@ import cloudImage from '../../../public/cloud.webp';
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen  bg-background dark:bg-foreground">
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col items-center justify-between md:flex-row">
           <div className="md:w-1/2">
