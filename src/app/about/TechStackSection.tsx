@@ -1,10 +1,10 @@
 // File: app/about/components/TechStackSection.tsx
-"use client"
+'use client';
 
-import { motion } from "framer-motion"
-import Section from './Section'
+import { motion } from 'framer-motion';
+import Section from './Section';
 
-const technologies = ["Next.js", "React", "Node.js", "Docker", "Kubernetes", "AWS", "Azure", "Google Cloud"]
+const technologies = ['Next.js', 'React', 'Node.js', 'Docker', 'Kubernetes', 'AWS', 'Azure', 'Google Cloud'];
 
 const TechStackSection = () => (
   <Section direction="right">
@@ -25,6 +25,6 @@ const TechStackSection = () => (
       </div>
     </div>
   </Section>
-)
+);
 
-export default TechStackSection
+export default TechStackSection;

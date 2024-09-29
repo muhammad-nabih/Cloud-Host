@@ -1,17 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
-    images: {
-      domains: ['i.ibb.co'], // Add this line if you still want to use external images
-      remotePatterns: [
-        {
-          protocol: 'https',
-          hostname: 'i.ibb.co',
-          port: '',
-          pathname: '/**',
-        },
-      ],
-    },
-  }
+  reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
+};
 
 export default nextConfig;

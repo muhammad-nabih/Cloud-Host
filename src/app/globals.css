@@ -14,15 +14,21 @@
   }
 }
 
-
-
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
+.fix-height {
+    /* 92 76 */
+  min-height: calc(100vh - 170px);
+}
 
+.max-footer-height{
+    max-height: 80px;
+    min-height: 80px;
+}
 
 @layer base {
   :root {
@@ -52,6 +58,7 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
   }
+
   .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
@@ -80,12 +87,11 @@
   }
 }
 
-
-
 @layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }

@@ -19,3 +19,18 @@ export interface PricingPlan {
   description: string;
   features: PlanFeature[];
 }
+
+export interface Children {
+  children: React.ReactNode;
+}
+
+export interface RootLayout {
+  children: React.ReactNode;
+}
+
+export type MenuItem = {
+  id: string;
+  label: string;
+  icon: React.ElementType;
+  href: string;
+};

@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Switch } from '@/components/ui/switch';
-import { PricingPlan } from '@/utils/types';
+import { PricingPlan } from '@/types/types';
 import { CiCircleCheck } from 'react-icons/ci';
 import Link from 'next/link';
 const pricingPlans: PricingPlan[] = [
@@ -75,12 +75,8 @@ export default function PricingPlans() {
                 <h3 className="text-xl font-semibold">{plan.name}</h3>
                 <p className="mt-4 text-gray-300">{plan.description}</p>
                 <p className="mt-8">
-                  <span className="text-4xl font-extrabold">
-                    ${isYearly ? plan.price.yearly : plan.price.monthly}
-                  </span>
-                  <span className="text-base font-medium text-gray-400">
-                    {isYearly ? '/year' : '/month'}
-                  </span>
+                  <span className="text-4xl font-extrabold">${isYearly ? plan.price.yearly : plan.price.monthly}</span>
+                  <span className="text-base font-medium text-gray-400">{isYearly ? '/year' : '/month'}</span>
                 </p>
                 <Link
                   href="#"
@@ -90,21 +86,15 @@ export default function PricingPlans() {
                 </Link>
               </div>
               <div className="px-6 pb-8 pt-6">
-                <h4 className="text-sm font-medium uppercase tracking-wide text-gray-300">
-                  What is included
-                </h4>
+                <h4 className="text-sm font-medium uppercase tracking-wide text-gray-300">What is included</h4>
                 <ul className="mt-6 space-y-4">
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex space-x-3">
                       <CiCircleCheck
-                        className={`h-5 w-5 flex-shrink-0 ${
-                          feature.included ? 'text-green-500' : 'text-gray-400'
-                        }`}
+                        className={`h-5 w-5 flex-shrink-0 ${feature.included ? 'text-green-500' : 'text-gray-400'}`}
                       />
 
-                      <span className={feature.included ? 'text-gray-300' : 'text-gray-400'}>
-                        {feature.text}
-                      </span>
+                      <span className={feature.included ? 'text-gray-300' : 'text-gray-400'}>{feature.text}</span>
                     </li>
                   ))}
                 </ul>

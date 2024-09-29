@@ -1,18 +1,6 @@
-import { Article } from '@/utils/types';
-import { useEffect, useState } from 'react';
+import ArticleDetails from './ArticleDetails';
 
-interface Params {
-  params: { id: string };
-}
-
-const SingleArticlePage = ({ params }: Params) => {
-  const { id } = params;
-
-  return (
-    <div>
-      <h1 className="text-3xl font-bold">{id}</h1>
-    </div>
-  );
+const SingleArticlePage = () => {
+  return <ArticleDetails params={{ id: '1' }} />;
 };
-
 export default SingleArticlePage;

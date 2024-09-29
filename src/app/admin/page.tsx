@@ -1,8 +1,11 @@
+import ArticleForm from '@/app/admin/ArticleForm';
 
-function Admin() {
-    return (
-      <div>Admin</div>
-    )
-  }
+const Admin = () => {
+  return (
+    <div className='fix-height p-4 '>
+      <ArticleForm />
+    </div>
+  );
+};
 
-  export default Admin
+export default Admin;

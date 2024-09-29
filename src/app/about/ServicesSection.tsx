@@ -1,16 +1,24 @@
 // File: app/about/components/ServicesSection.tsx
-"use client"
+'use client';
 
-import { motion } from "framer-motion"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Cloud, Shield, Zap } from "lucide-react"
-import Section from './Section'
+import { motion } from 'framer-motion';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Cloud, Shield, Zap } from 'lucide-react';
+import Section from './Section';
 
 const services = [
-  { icon: Cloud, title: "Cloud Infrastructure", description: "State-of-the-art data centers ensuring 99.99% uptime." },
-  { icon: Shield, title: "Advanced Security", description: "Multi-layered security protocols and real-time threat detection." },
-  { icon: Zap, title: "High Performance", description: "Optimized configurations for unparalleled speed and reliability." },
-]
+  { icon: Cloud, title: 'Cloud Infrastructure', description: 'State-of-the-art data centers ensuring 99.99% uptime.' },
+  {
+    icon: Shield,
+    title: 'Advanced Security',
+    description: 'Multi-layered security protocols and real-time threat detection.',
+  },
+  {
+    icon: Zap,
+    title: 'High Performance',
+    description: 'Optimized configurations for unparalleled speed and reliability.',
+  },
+];
 
 const ServicesSection = () => (
   <Section direction="right">
@@ -37,6 +45,6 @@ const ServicesSection = () => (
       </div>
     </div>
   </Section>
-)
+);
 
-export default ServicesSection
+export default ServicesSection;

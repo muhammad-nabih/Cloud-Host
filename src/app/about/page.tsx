@@ -8,7 +8,7 @@ import CTASection from '@/app/about/CTASection';
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen overflow-hidden bg-gradient-to-b from-blue-50 to-blue-100 text-blue-900">
+    <div className="fix-height min-h-screen overflow-hidden bg-gradient-to-b from-blue-50 to-blue-100 text-blue-900">
       <main>
         <HeroSection />
         <ServicesSection />

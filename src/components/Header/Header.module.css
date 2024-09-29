@@ -5,10 +5,17 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    box-shadow:
+        rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+        rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     background-color: #192949;
     color: white;
-    position: relative;
+    position: sticky;
+    top: 0;
+    max-height: 90px;
+    min-height: 90px;
+    z-index: 10;
+
 }
 
 .auth {
@@ -50,7 +57,6 @@
     justify-content: center;
     width: 100%;
 }
-
 
 .menu li a {
     transition: 0.4s;
@@ -95,7 +101,6 @@
         text-align: center;
         padding: 10px;
         width: 100%;
-
     }
 
     .navbarWrapper {

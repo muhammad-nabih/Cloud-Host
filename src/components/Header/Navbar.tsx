@@ -9,49 +9,72 @@ import { IoMdClose } from 'react-icons/io';
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
   return (
-    <nav className={styles.nav}>
-      <div data-logo="CLOUD-HOST">
-        <Link href="/" className={styles.logo}>
-          CLOUD
-          <span>
-            <GrTechnology />
-          </span>
-          HOSTING
+    <>
+      {' '}
+      <nav className={styles.nav}>
+        <div data-logo='CLOUD-HOST'>
+          <Link href='/' className={styles.logo}>
+            CLOUD
+            <span>
+              <GrTechnology />
+            </span>
+            HOSTING
+          </Link>
+
+          <div className={styles.iconMenu}>
+            {showMenu ? (
+              <IoMdClose onClick={() => setShowMenu((prev) => !prev)} />
+            ) : (
+              <AiOutlineMenu onClick={() => setShowMenu((prev) => !prev)} />
+            )}
+          </div>
+        </div>
+
+        <div
+          className={styles.navbarWrapper}
+          style={{
+            clipPath:
+              (showMenu && 'polygon(0 0, 100% 0, 100% 100%, 0 100%') || '',
+          }}>
+          <ul className={styles.menu}>
+            <li>
+              <Link onClick={() => setShowMenu(false)} href={'/'}>
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link onClick={() => setShowMenu(false)} href={'/about'}>
+                About
+              </Link>
+            </li>
+            <li>
+              <Link onClick={() => setShowMenu(false)} href={'/articles'}>
+                Articles
+              </Link>
+            </li>
+            <li>
+              <Link onClick={() => setShowMenu(false)} href={'/admin'}>
+                Admin Dashboard
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div className={styles.auth}>
+        <Link
+          onClick={() => setShowMenu(false)}
+          href={'/login'}
+          className={styles.login}>
+          Login
         </Link>
-
-        <div className={styles.iconMenu}>{showMenu ? <IoMdClose onClick={() => setShowMenu((prev) => !prev)} /> : <AiOutlineMenu onClick={() => setShowMenu((prev) => !prev)} />}</div>
+        <Link
+          onClick={() => setShowMenu(false)}
+          href={'/register'}
+          className={styles.register}>
+          Register
+        </Link>
       </div>
-
-      <div
-        className={styles.navbarWrapper}
-        style={{
-          clipPath: (showMenu && 'polygon(0 0, 100% 0, 100% 100%, 0 100%') || '',
-        }}
-      >
-        <ul className={styles.menu}>
-          <li>
-            <Link onClick={() => setShowMenu(false)} href={'/'}>
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link onClick={() => setShowMenu(false)} href={'/about'}>
-              About
-            </Link>
-          </li>
-          <li>
-            <Link onClick={() => setShowMenu(false)} href={'/articles'}>
-              Articles
-            </Link>
-          </li>
-          <li>
-            <Link onClick={() => setShowMenu(false)} href={'/admin'}>
-              Admin Dashboard
-            </Link>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    </>
   );
 };
 

@@ -1,16 +1,16 @@
 // File: app/about/components/ChooseUsSection.tsx
-"use client"
+'use client';
 
-import { motion } from "framer-motion"
-import { Users, Headphones, Rocket, Shield } from "lucide-react"
-import Section from './Section'
+import { motion } from 'framer-motion';
+import { Users, Headphones, Rocket, Shield } from 'lucide-react';
+import Section from './Section';
 
 const items = [
-  { icon: Users, text: "10,000+ Satisfied Clients" },
-  { icon: Headphones, text: "24/7 Expert Support" },
-  { icon: Rocket, text: "Scalable Solutions" },
-  { icon: Shield, text: "99.99% Uptime Guarantee" },
-]
+  { icon: Users, text: '10,000+ Satisfied Clients' },
+  { icon: Headphones, text: '24/7 Expert Support' },
+  { icon: Rocket, text: 'Scalable Solutions' },
+  { icon: Shield, text: '99.99% Uptime Guarantee' },
+];
 
 const ChooseUsSection = () => (
   <Section className="bg-gradient-to-r from-blue-500 to-blue-900 text-white" direction="left">
@@ -32,6 +32,6 @@ const ChooseUsSection = () => (
       </div>
     </div>
   </Section>
-)
+);
 
-export default ChooseUsSection
+export default ChooseUsSection;

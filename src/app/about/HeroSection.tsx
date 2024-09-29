@@ -1,8 +1,8 @@
 // File: app/about/components/HeroSection.tsx
-"use client"
+'use client';
 
-import { motion } from "framer-motion"
-import Section from './Section'
+import { motion } from 'framer-motion';
+import Section from './Section';
 
 const HeroSection = () => (
   <Section className="bg-gradient-to-r from-blue-400 to-blue-950 text-white">
@@ -21,10 +21,11 @@ const HeroSection = () => (
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.4 }}
       >
-        Empowering your digital presence with cutting-edge cloud solutions since 2023. We&apos;re not just hosting; we&apos;re revolutionizing the way you connect with the world.
+        Empowering your digital presence with cutting-edge cloud solutions since 2023. We&apos;re not just hosting;
+        we&apos;re revolutionizing the way you connect with the world.
       </motion.p>
     </div>
   </Section>
-)
+);
 
-export default HeroSection
+export default HeroSection;
