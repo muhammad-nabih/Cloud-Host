@@ -1,67 +1,67 @@
 :root {
-  /* الألوان الأساسية */
-  --primary-dark: #1e3a8a; /* أزرق داكن للثقة والاستقرار */
-  --primary-main: #2563eb; /* أزرق رئيسي للهوية البصرية */
-  --primary-light: #60a5fa; /* أزرق فاتح للحيوية والنشاط */
+	/* الألوان الأساسية */
+	--primary-dark: #1e3a8a; /* أزرق داكن للثقة والاستقرار */
+	--primary-main: #2563eb; /* أزرق رئيسي للهوية البصرية */
+	--primary-light: #60a5fa; /* أزرق فاتح للحيوية والنشاط */
 
-  /* ألوان الخلفيات */
-  --bg-dark: #0f172a; /* خلفية داكنة للأقسام الرئيسية */
-  --bg-light: #f0f9ff; /* خلفية فاتحة للأقسام الثانوية */
-  --bg-white: #ffffff; /* خلفية بيضاء للتباين */
+	/* ألوان الخلفيات */
+	--bg-dark: #0f172a; /* خلفية داكنة للأقسام الرئيسية */
+	--bg-light: #f0f9ff; /* خلفية فاتحة للأقسام الثانوية */
+	--bg-white: #ffffff; /* خلفية بيضاء للتباين */
 
-  /* ألوان النصوص */
-  --text-dark: #1e293b; /* نص داكن للقراءة السهلة */
-  --text-light: #94a3b8; /* نص فاتح للمعلومات الثانوية */
-  --text-white: #ffffff; /* نص أبيض للتباين العالي */
+	/* ألوان النصوص */
+	--text-dark: #1e293b; /* نص داكن للقراءة السهلة */
+	--text-light: #94a3b8; /* نص فاتح للمعلومات الثانوية */
+	--text-white: #ffffff; /* نص أبيض للتباين العالي */
 
-  /* ألوان الأزرار والعناصر التفاعلية */
-  --accent: #22c55e; /* لون مميز للدعوات للإجراء (CTA) */
-  --accent-hover: #16a34a; /* لون التحويم للأزرار المميزة */
+	/* ألوان الأزرار والعناصر التفاعلية */
+	--accent: #22c55e; /* لون مميز للدعوات للإجراء (CTA) */
+	--accent-hover: #16a34a; /* لون التحويم للأزرار المميزة */
 
-  /* ألوان إضافية */
-  --warning: #fbbf24; /* لون تحذيري للتنبيهات */
-  --error: #ef4444; /* لون الخطأ للرسائل الهامة */
+	/* ألوان إضافية */
+	--warning: #fbbf24; /* لون تحذيري للتنبيهات */
+	--error: #ef4444; /* لون الخطأ للرسائل الهامة */
 }
 
 /* أمثلة على استخدام الألوان */
 body {
-  background-color: var(--bg-light);
-  color: var(--text-dark);
+	background-color: var(--bg-light);
+	color: var(--text-dark);
 }
 
 .header {
-  background-color: var(--primary-dark);
-  color: var(--text-white);
+	background-color: var(--primary-dark);
+	color: var(--text-white);
 }
 
 .button-primary {
-  background-color: var(--primary-main);
-  color: var(--text-white);
+	background-color: var(--primary-main);
+	color: var(--text-white);
 }
 
 .button-primary:hover {
-  background-color: var(--primary-dark);
+	background-color: var(--primary-dark);
 }
 
 .button-cta {
-  background-color: var(--accent);
-  color: var(--text-white);
+	background-color: var(--accent);
+	color: var(--text-white);
 }
 
 .button-cta:hover {
-  background-color: var(--accent-hover);
+	background-color: var(--accent-hover);
 }
 
 .section-dark {
-  background-color: var(--bg-dark);
-  color: var(--text-white);
+	background-color: var(--bg-dark);
+	color: var(--text-white);
 }
 
 .section-light {
-  background-color: var(--bg-white);
-  color: var(--text-dark);
+	background-color: var(--bg-white);
+	color: var(--text-dark);
 }
 
 .info-text {
-  color: var(--text-light);
+	color: var(--text-light);
 }

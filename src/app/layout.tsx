@@ -7,8 +7,8 @@ import Footer from '@/components/Footer/Footer';
 
 // Google font
 const inter = Inter({
-  subsets: ['latin'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+	subsets: ['latin'],
+	weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
 
 // Local Font
@@ -26,21 +26,20 @@ const inter = Inter({
 
 // Tab Title
 export const metadata: Metadata = {
-  title: 'Cloud Host',
-  description: 'Cloud Host Project',
+	title: 'Cloud Host | Home',
+	description: 'Cloud Host Project',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return (
-    <html lang="en">
-      <body
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        className={inter.className}
-      >
-        <Header />
-        {children}
-        <Footer />
-      </body>
-    </html>
-  );
+	return (
+		<html lang='en'>
+			<body
+				// className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+				className={inter.className}>
+				<Header />
+				<main className='overflow-hidden'>{children}</main>
+				<Footer />
+			</body>
+		</html>
+	);
 }

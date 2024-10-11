@@ -1,47 +1,35 @@
-import { Article } from '@/types/types';
-interface Params {
-  params: { id: string };
-}
+import AddCommentForm from '@/components/comments/AddCommentForm';
+import CommentItem from '@/components/comments/CommentItem';
+import CommentsSection from '@/components/comments/CommentSection';
+import { useFetch } from '@/hooks/useFetch';
+import { Article, Params } from '@/types/types';
+import { ToastContainer } from 'react-toastify';
 
-const fetchArticlesDetails = async (
-  id: string,
-): Promise<Article> => {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${id}`,
-  );
-  if (!response.ok) {
-    throw new Error(
-      `Failed to fetch article Details for id ${id}`,
-    );
-  }
-  const article: Article = await response.json();
-  return article;
-};
 const ArticleDetails = async ({ params }: Params) => {
-  const { id } = params;
-  const article = await fetchArticlesDetails(id);
+	const { id } = params;
+	const article = await useFetch<Article>({
+		url: `https://jsonplaceholder.typicode.com/posts/${id}`,
+	});
 
-  return (
-    <section className='fix-height flex items-center justify-center'>
-      <div className='mx-auto my-3 flex w-11/12 flex-col items-center justify-center space-y-3 rounded-lg border-2 bg-gray-900 p-4'>
-        <h1 className='text-3xl font-bold text-blue-100'>
-          {article.title}
-        </h1>
-        <p className='text-lg text-gray-300'>
-          {article.body}
-        </p>
-        <p className='text-sm text-gray-400'>
-          {' '}
-          By{' '}
-          <a
-            href={`https://jsonplaceholder.typicode.com/users/${article.userId}`}
-            className='text-blue-600 hover:underline'>
-            {article.userId}
-          </a>
-        </p>
-      </div>
-    </section>
-  );
+	return (
+		<>
+			<ToastContainer />
+			<section className='fix-height item-center container mx-auto flex w-full flex-col justify-center'>
+				<div className='mx-auto my-3 flex flex-col items-center justify-center space-y-3 rounded-lg border-2 bg-gray-900 p-4 text-center'>
+					<h1 className='text-3xl font-bold text-blue-100'>{article.title}</h1>
+					<p className='text-lg text-gray-300'>{article.body}</p>
+					<p className='text-sm text-gray-400'>
+						By
+						<a href={`https://jsonplaceholder.typicode.com/users/${article.userId}`} className='text-blue-600 hover:underline'>
+							{article.userId}
+						</a>
+					</p>
+				</div>
+
+				<CommentsSection />
+			</section>
+		</>
+	);
 };
 
 export default ArticleDetails;

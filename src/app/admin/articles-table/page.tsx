@@ -1,9 +1,7 @@
 import React from 'react';
 
-type Props = {};
-
-const ArticlesTable  = (props: Props) => {
-  return <div>ArticlesTable </div>;
+const ArticlesTable = () => {
+	return <div>ArticlesTable </div>;
 };
 
-export default ArticlesTable ;
+export default ArticlesTable;

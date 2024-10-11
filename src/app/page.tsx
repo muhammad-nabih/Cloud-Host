@@ -4,13 +4,13 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 
 const HomePage = () => {
-  return (
-    <>
-      <ToastContainer />
-      <LandingPage />
-      <PricingPlans />
-    </>
-  );
+	return (
+		<>
+			<ToastContainer />
+			<LandingPage />
+			<PricingPlans />
+		</>
+	);
 };
 
 export default HomePage;
