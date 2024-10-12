@@ -7,29 +7,32 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Pencil, Trash2, ThumbsUp, MessageSquare } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { CommentItemProps } from '@/types/types';
+// import { CommentItemProps } from '@/types/types';
 import { BiSolidLike } from 'react-icons/bi';
+import { Comment } from '@/types/types';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { addLike, deleteComment, editComment } from '@/store/features/commentSlice/commentSlice';
 
-export default function CommentItem({ id, author, content, createdAt, likes, replies, onEdit, onDelete, onLike, onReply, isLiked, currentUser }: CommentItemProps) {
-	const [isEditing, setIsEditing] = useState(false);
-	const [editedContent, setEditedContent] = useState(content);
-
-	const handleLike = () => {
-		onLike(id);
-	};
+export default function CommentItem({ author, content, createdAt, id, replies, likedBy }: Comment) {
+	const currentUser = 'Mohamed';
+	const [showMenu, setShowMenu] = useState(false);
+	const [isLiked, setIsLiked] = useState(likedBy.includes(currentUser));
+	const [updateComment, setUpdateComment] = useState(content);
+	const dispatch = useAppDispatch();
+	const comments = useAppSelector((state) => state.comments);
 
 	const handleEdit = () => {
-		setIsEditing(true);
+		dispatch(editComment({ id, content: updateComment }));
+		setShowMenu(false);
 	};
 
-	const handleSaveEdit = () => {
-		onEdit(id, editedContent);
-		setIsEditing(false);
+	const handleDelete = () => {
+		dispatch(deleteComment(id));
 	};
 
-	const handleCancelEdit = () => {
-		setEditedContent(content);
-		setIsEditing(false);
+	const handleLike = () => {
+		dispatch(addLike({ id, likedBy, currentUser }));
+		setIsLiked((prev) => !prev);
 	};
 
 	return (
@@ -47,7 +50,8 @@ export default function CommentItem({ id, author, content, createdAt, likes, rep
 				</div>
 
 				{/* Dropdown Menu for edit and delete  */}
-				{author.name === currentUser && (
+
+				{currentUser === author.name && (
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button variant='ghost' className='h-8 w-8 p-0'>
@@ -56,12 +60,12 @@ export default function CommentItem({ id, author, content, createdAt, likes, rep
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align='end'>
-							<DropdownMenuItem onClick={handleEdit}>
+							<DropdownMenuItem onClick={() => setShowMenu(true)}>
 								<Pencil className='mr-2 h-4 w-4' />
 								<span>Edit</span>
 							</DropdownMenuItem>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem onClick={() => onDelete(id)}>
+							<DropdownMenuItem onClick={handleDelete}>
 								<Trash2 className='mr-2 h-4 w-4' />
 								<span>Delete</span>
 							</DropdownMenuItem>
@@ -71,31 +75,33 @@ export default function CommentItem({ id, author, content, createdAt, likes, rep
 			</CardHeader>
 
 			<CardContent>
-				{isEditing ? (
-					<div className='flex flex-col space-y-2'>
-						<Input value={editedContent} onChange={(e) => setEditedContent(e.target.value)} />
-						<div className='flex space-x-2'>
-							<Button onClick={handleSaveEdit}>Save</Button>
-							<Button variant='outline' onClick={handleCancelEdit}>
-								Cancel
-							</Button>
+				<section className='flex flex-col space-y-2'>
+					{showMenu ? (
+						<div className='my-4'>
+							<Input value={updateComment} onChange={(e) => setUpdateComment(e.target.value)} />
+							<div className='my-3 flex space-x-2'>
+								<Button onClick={handleEdit}>Save</Button>
+								<Button onClick={() => setShowMenu(false)} variant='outline'>
+									Cancel
+								</Button>
+							</div>
 						</div>
-					</div>
-				) : (
-					<p className='text-sm'>{content}</p>
-				)}
+					) : (
+						<p className='text-sm'>{content}</p>
+					)}
+				</section>
 			</CardContent>
 
 			<CardFooter className='flex justify-between'>
 				<div className='flex items-center gap-4 space-x-4'>
-					<Button variant='ghost' size='sm' className={`flex w-20 items-center space-x-1`} onClick={handleLike}>
+					<Button onClick={handleLike} variant='ghost' size='sm' className={`flex w-20 items-center space-x-1`}>
 						{isLiked ? <BiSolidLike className={`h-4 w-4 text-blue-600`} /> : <ThumbsUp className={`h-4 w-4`} />}
-						<span>{likes}</span>
+						<span>{likedBy.length}</span>
 					</Button>
 
-					<Button variant='ghost' size='sm' className='w-22 flex items-center space-x-1' onClick={() => onReply(id)}>
+					<Button variant='ghost' size='sm' className='w-22 flex items-center space-x-1'>
 						<MessageSquare className='h-4 w-4' />
-						<span>{replies}</span>
+						<span>{replies.length}</span>
 					</Button>
 				</div>
 			</CardFooter>

@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-
 export interface Article {
 	id: number;
 	title: string;
@@ -47,27 +45,17 @@ export interface Params {
 	params: { id: string };
 }
 
-export interface CommentItemProps {
-	id: string;
-	author: { name: string; avatar: string };
-	content: string;
-	createdAt: Date;
-	likes: number;
-	replies: number;
-	onEdit: (id: string, newContent: string) => void;
-	onDelete: (id: string) => void;
-	onLike: (id: string) => void;
-	onReply: (id: string) => void;
-	isLiked: boolean;
-	currentUser: string;
-}
-
 export interface Comment {
 	id: string;
-	author: { name: string; avatar: string };
+	author: { id: string; name: string; avatar: string };
 	content: string;
-	createdAt: Date;
-	likes: number;
-	replies: number;
+	createdAt: string;
+	replies: string[];
 	likedBy: string[];
+}
+
+export interface AddLike {
+	id: string;
+	likedBy: string[];
+	currentUser: string;
 }

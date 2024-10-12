@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
+import { ReduxProvider } from '@/store/reduxProvider';
 
 // Google font
 const inter = Inter({
@@ -37,7 +38,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 				// className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 				className={inter.className}>
 				<Header />
-				<main className='overflow-hidden'>{children}</main>
+				<ReduxProvider>
+					<main className='overflow-hidden'>{children}</main>
+				</ReduxProvider>
+
 				<Footer />
 			</body>
 		</html>
