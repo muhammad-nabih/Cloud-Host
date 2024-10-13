@@ -44,18 +44,22 @@ export interface FetchParams {
 export interface Params {
 	params: { id: string };
 }
-
 export interface Comment {
 	id: string;
 	author: { id: string; name: string; avatar: string };
 	content: string;
 	createdAt: string;
-	replies: string[];
+	replies: Comment[]; // Changed from string[] to Comment[]
 	likedBy: string[];
+	parentId: string | null; // New field to track parent comment
 }
 
 export interface AddLike {
 	id: string;
-	likedBy: string[];
 	currentUser: string;
+}
+
+export interface AddReplyPayload {
+	parentId: string;
+	content: string;
 }

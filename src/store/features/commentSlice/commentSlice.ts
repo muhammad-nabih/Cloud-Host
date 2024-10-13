@@ -1,19 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '@/store/store';
 import { initialComments } from '@/data/dataComments';
-import { Comment } from '@/types/types';
+import { Comment, AddLike, AddReplyPayload } from '@/types/types';
 import ShortUniqueId from 'short-unique-id';
 const { randomUUID } = new ShortUniqueId({ length: 10 });
-import { AddLike } from '@/types/types';
 
-// Define the initial state using that type
 const initialState = initialComments;
 
 export const commentSlice = createSlice({
 	name: 'comments',
-
-	// `createSlice` will infer the state type from the `initialState` argument
 	initialState,
 	reducers: {
 		addComment: (state, action: PayloadAction<string>) => {
@@ -24,39 +19,94 @@ export const commentSlice = createSlice({
 				createdAt: new Date().toISOString(),
 				replies: [],
 				likedBy: [],
+				parentId: null,
 			};
 			state.push(newComment);
 		},
+
 		addLike: (state, { payload }: PayloadAction<AddLike>) => {
-			const { id, likedBy, currentUser } = payload;
-			state.map((comment) => {
-				if (comment.id === id) {
-					let isLiked = likedBy.includes(currentUser);
-					if (isLiked) {
-						comment.likedBy = likedBy.filter((user: string) => user !== currentUser);
-					} else {
-						comment.likedBy.push(currentUser);
+			const { id, currentUser } = payload;
+			const updateLikes = (comments: Comment[]) => {
+				for (let comment of comments) {
+					if (comment.id === id) {
+						let isLiked = comment.likedBy.includes(currentUser);
+						if (isLiked) {
+							comment.likedBy = comment.likedBy.filter((user: string) => user !== currentUser);
+						} else {
+							comment.likedBy.push(currentUser);
+						}
+						return;
+					}
+					if (comment.replies.length > 0) {
+						updateLikes(comment.replies);
 					}
 				}
-			});
+			};
+			updateLikes(state);
 		},
-		addReply: (state, action: PayloadAction<string>) => {},
+
+		addReply: (state, { payload }: PayloadAction<AddReplyPayload>) => {
+			const { parentId, content } = payload;
+			const newReply: Comment = {
+				id: randomUUID(),
+				author: { id: randomUUID(), name: 'Mohamed', avatar: 'public/avatar.svg' },
+				content: content,
+				createdAt: new Date().toISOString(),
+				replies: [],
+				likedBy: [],
+				parentId: parentId,
+			};
+
+			const addReplyToComment = (comments: Comment[]) => {
+				for (let comment of comments) {
+					if (comment.id === parentId) {
+						comment.replies.push(newReply);
+						return true;
+					}
+					if (comment.replies.length > 0 && addReplyToComment(comment.replies)) {
+						return true;
+					}
+				}
+				return false;
+			};
+
+			addReplyToComment(state);
+		},
 		deleteComment: (state, { payload }: PayloadAction<string>) => {
-			return state.filter((comment) => comment.id != payload);
+			const deleteFromComments = (comments: Comment[]) => {
+				for (let i = 0; i < comments.length; i++) {
+					if (comments[i].id === payload) {
+						comments.splice(i, 1);
+						return true;
+					}
+					if (comments[i].replies.length > 0) {
+						if (deleteFromComments(comments[i].replies)) {
+							return true;
+						}
+					}
+				}
+				return false;
+			};
+			deleteFromComments(state);
 		},
 		editComment: (state, { payload }: PayloadAction<{ id: string; content: string }>) => {
-			state.map((comment) => {
-				if (comment.id === payload.id) {
-					comment.content = payload.content;
+			const editInComments = (comments: Comment[]) => {
+				for (let comment of comments) {
+					if (comment.id === payload.id) {
+						comment.content = payload.content;
+						return true;
+					}
+					if (comment.replies.length > 0 && editInComments(comment.replies)) {
+						return true;
+					}
 				}
-			});
+				return false;
+			};
+			editInComments(state);
 		},
 	},
 });
 
 export const { addComment, addLike, addReply, deleteComment, editComment } = commentSlice.actions;
-
-// Other code such as selectors can use the imported `RootState` type
-// export const selectCount = (state: RootState) => state.counter.value;
 
 export default commentSlice.reducer;

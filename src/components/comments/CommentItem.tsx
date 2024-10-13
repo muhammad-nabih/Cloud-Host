@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { format } from 'date-fns';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -7,19 +7,26 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Pencil, Trash2, ThumbsUp, MessageSquare } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-// import { CommentItemProps } from '@/types/types';
 import { BiSolidLike } from 'react-icons/bi';
 import { Comment } from '@/types/types';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { addLike, deleteComment, editComment } from '@/store/features/commentSlice/commentSlice';
+import { useAppDispatch } from '@/store/hooks';
+import { addLike, deleteComment, editComment, addReply } from '@/store/features/commentSlice/commentSlice';
 
 export default function CommentItem({ author, content, createdAt, id, replies, likedBy }: Comment) {
 	const currentUser = 'Mohamed';
 	const [showMenu, setShowMenu] = useState(false);
 	const [isLiked, setIsLiked] = useState(likedBy.includes(currentUser));
 	const [updateComment, setUpdateComment] = useState(content);
+	const [showReplyForm, setShowReplyForm] = useState(false);
+	const [replyContent, setReplyContent] = useState('');
 	const dispatch = useAppDispatch();
-	const comments = useAppSelector((state) => state.comments);
+	const replyInputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		if (showReplyForm && replyInputRef.current) {
+			replyInputRef.current.focus();
+		}
+	}, [showReplyForm]);
 
 	const handleEdit = () => {
 		dispatch(editComment({ id, content: updateComment }));
@@ -31,8 +38,20 @@ export default function CommentItem({ author, content, createdAt, id, replies, l
 	};
 
 	const handleLike = () => {
-		dispatch(addLike({ id, likedBy, currentUser }));
+		dispatch(addLike({ id,  currentUser }));
 		setIsLiked((prev) => !prev);
+	};
+
+	const handleReply = () => {
+		if (replyContent.trim()) {
+			dispatch(addReply({ parentId: id, content: replyContent }));
+			setReplyContent('');
+			setShowReplyForm(false);
+		}
+	};
+
+	const toggleReplyForm = () => {
+		setShowReplyForm((prev) => !prev);
 	};
 
 	return (
@@ -45,11 +64,9 @@ export default function CommentItem({ author, content, createdAt, id, replies, l
 					</Avatar>
 					<div>
 						<p className='text-sm font-semibold'>{author.name}</p>
-						<p className='text-xs text-muted-foreground'>{format(createdAt, "MMM d, yyyy 'at' h:mm a")}</p>
+						<p className='text-xs text-muted-foreground'>{format(new Date(createdAt), "MMM d, yyyy 'at' h:mm a")}</p>
 					</div>
 				</div>
-
-				{/* Dropdown Menu for edit and delete  */}
 
 				{currentUser === author.name && (
 					<DropdownMenu>
@@ -99,12 +116,34 @@ export default function CommentItem({ author, content, createdAt, id, replies, l
 						<span>{likedBy.length}</span>
 					</Button>
 
-					<Button variant='ghost' size='sm' className='w-22 flex items-center space-x-1'>
+					<Button onClick={toggleReplyForm} variant='ghost' size='sm' className='w-22 flex items-center space-x-1'>
 						<MessageSquare className='h-4 w-4' />
-						<span>{replies.length}</span>
+						<span>{replies.length} Reply</span>
 					</Button>
 				</div>
 			</CardFooter>
+
+			{showReplyForm && (
+				<div className='mt-4 px-4 pb-4'>
+					<Input ref={replyInputRef} value={replyContent} onChange={(e) => setReplyContent(e.target.value)} placeholder='Write a reply...' />
+					<div className='mt-2 flex space-x-2'>
+						<Button onClick={handleReply}>Post Reply</Button>
+						<Button onClick={() => setShowReplyForm(false)} variant='outline'>
+							Cancel
+						</Button>
+					</div>
+				</div>
+			)}
+
+			{/* Note -  if you found reply ok reply look like comment so you can use comment Item to render it but in child section */}
+
+			{replies.length > 0 && (
+				<div className='my-4 space-y-4 pl-8 pr-3'>
+					{replies.map((reply) => (
+						<CommentItem key={reply.id} {...reply} />
+					))}
+				</div>
+			)}
 		</Card>
 	);
 }
