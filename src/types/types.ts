@@ -49,9 +49,9 @@ export interface Comment {
 	author: { id: string; name: string; avatar: string };
 	content: string;
 	createdAt: string;
-	replies: Comment[]; // Changed from string[] to Comment[]
+	replies: Comment[];
 	likedBy: string[];
-	parentId: string | null; // New field to track parent comment
+	parentId: string | null;
 }
 
 export interface AddLike {
@@ -62,4 +62,5 @@ export interface AddLike {
 export interface AddReplyPayload {
 	parentId: string;
 	content: string;
+    currentUser: string;
 }

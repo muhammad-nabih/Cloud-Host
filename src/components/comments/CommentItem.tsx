@@ -13,7 +13,7 @@ import { useAppDispatch } from '@/store/hooks';
 import { addLike, deleteComment, editComment, addReply } from '@/store/features/commentSlice/commentSlice';
 
 export default function CommentItem({ author, content, createdAt, id, replies, likedBy }: Comment) {
-	const currentUser = 'Mohamed';
+	const currentUser = 'Ali';
 	const [showMenu, setShowMenu] = useState(false);
 	const [isLiked, setIsLiked] = useState(likedBy.includes(currentUser));
 	const [updateComment, setUpdateComment] = useState(content);
@@ -38,13 +38,13 @@ export default function CommentItem({ author, content, createdAt, id, replies, l
 	};
 
 	const handleLike = () => {
-		dispatch(addLike({ id,  currentUser }));
+		dispatch(addLike({ id, currentUser }));
 		setIsLiked((prev) => !prev);
 	};
 
 	const handleReply = () => {
 		if (replyContent.trim()) {
-			dispatch(addReply({ parentId: id, content: replyContent }));
+			dispatch(addReply({ parentId: id, content: replyContent, currentUser: currentUser }));
 			setReplyContent('');
 			setShowReplyForm(false);
 		}

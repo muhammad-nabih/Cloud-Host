@@ -12,16 +12,17 @@ export const commentSlice = createSlice({
 	initialState,
 	reducers: {
 		addComment: (state, action: PayloadAction<string>) => {
+			const avatar = 'https://robohash.org/a3c5bed4f24d3b464bac5ecd033e1efc?set=set4&bgset=&size=400x400';
 			const newComment: Comment = {
 				id: randomUUID(),
-				author: { id: randomUUID(), name: 'Mohamed', avatar: 'public/avatar.svg' },
+				author: { id: randomUUID(), name: 'Mohamed', avatar: avatar },
 				content: action.payload,
 				createdAt: new Date().toISOString(),
 				replies: [],
 				likedBy: [],
 				parentId: null,
 			};
-			state.push(newComment);
+			state.unshift(newComment);
 		},
 
 		addLike: (state, { payload }: PayloadAction<AddLike>) => {
@@ -29,7 +30,7 @@ export const commentSlice = createSlice({
 			const updateLikes = (comments: Comment[]) => {
 				for (let comment of comments) {
 					if (comment.id === id) {
-						let isLiked = comment.likedBy.includes(currentUser);
+						const isLiked = comment.likedBy.includes(currentUser);
 						if (isLiked) {
 							comment.likedBy = comment.likedBy.filter((user: string) => user !== currentUser);
 						} else {
@@ -37,58 +38,70 @@ export const commentSlice = createSlice({
 						}
 						return;
 					}
+
+					// replies
+
 					if (comment.replies.length > 0) {
 						updateLikes(comment.replies);
 					}
 				}
 			};
+
 			updateLikes(state);
 		},
 
+		// Add Reply To Comment
 		addReply: (state, { payload }: PayloadAction<AddReplyPayload>) => {
-			const { parentId, content } = payload;
-			const newReply: Comment = {
-				id: randomUUID(),
-				author: { id: randomUUID(), name: 'Mohamed', avatar: 'public/avatar.svg' },
-				content: content,
-				createdAt: new Date().toISOString(),
-				replies: [],
-				likedBy: [],
-				parentId: parentId,
-			};
+			const { parentId, content, currentUser } = payload;
 
 			const addReplyToComment = (comments: Comment[]) => {
+				const newReply = {
+					id: randomUUID(),
+					author: { id: randomUUID(), name: currentUser, avatar: '' },
+					content,
+					createdAt: new Date().toISOString(),
+					replies: [],
+					likedBy: [],
+					parentId: parentId,
+				};
 				for (let comment of comments) {
 					if (comment.id === parentId) {
 						comment.replies.push(newReply);
 						return true;
-					}
-					if (comment.replies.length > 0 && addReplyToComment(comment.replies)) {
-						return true;
-					}
-				}
-				return false;
-			};
-
-			addReplyToComment(state);
-		},
-		deleteComment: (state, { payload }: PayloadAction<string>) => {
-			const deleteFromComments = (comments: Comment[]) => {
-				for (let i = 0; i < comments.length; i++) {
-					if (comments[i].id === payload) {
-						comments.splice(i, 1);
-						return true;
-					}
-					if (comments[i].replies.length > 0) {
-						if (deleteFromComments(comments[i].replies)) {
-							return true;
+					} else {
+						if (comment.replies.length > 0) {
+							const replyFound = addReplyToComment(comment.replies);
+							if (replyFound) return true;
 						}
 					}
 				}
 				return false;
 			};
-			deleteFromComments(state);
+			addReplyToComment(state);
 		},
+
+		deleteComment: (state, { payload }: PayloadAction<string>) => {
+			const id = payload;
+			const deleteInComment = (comments: Comment[]): Comment[] => {
+				const IDsToDelete = new Set<string>();
+				const collectIdsToDelete = (comments: Comment[]): void => {
+					comments.forEach((comment: Comment) => {
+						if (comment.id === id) {
+							IDsToDelete.add(comment.id);
+						} else if (comment.replies.length > 0) {
+							collectIdsToDelete(comment.replies);
+						}
+					});
+				};
+
+				collectIdsToDelete(comments);
+				return comments.filter((comment) => !IDsToDelete.has(comment.id));
+			};
+
+			const updateState = deleteInComment(state);
+			state.splice(0, state.length, ...updateState);
+		},
+
 		editComment: (state, { payload }: PayloadAction<{ id: string; content: string }>) => {
 			const editInComments = (comments: Comment[]) => {
 				for (let comment of comments) {
